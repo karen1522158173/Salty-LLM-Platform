@@ -1,0 +1,34 @@
+# 预训练阶段(对应旧 train.py)
+stage: pretrain
+tokenizer_path: ./minimind_tokenizer
+bin_path: ./data/bin/train_data.bin
+ckpt_dir: ./checkpoints/pretrain
+log_dir: ./runs/pretrain
+
+seq_len: 512
+seed: 42
+device: cuda
+
+max_iters: 135000
+warmup: 2000
+lr: 4.0e-4
+min_lr: 1.0e-5
+weight_decay: 0.1
+batch_size: 4
+grad_accum: 8
+grad_clip: 1.0
+
+save_interval: 500
+eval_interval: 500
+log_every: 10
+use_amp: true
+amp_dtype: bfloat16
+
+model:
+  dim: 512
+  n_layers: 6
+  n_heads: 8
+  n_kv_heads: 2
+  ffn_hidden_dim: 1536
+  max_seq_len: 2048
+  dropout: 0.0

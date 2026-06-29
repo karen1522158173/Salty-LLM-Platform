@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "salty"
+version = "0.1.0"
+description = "咸菜 Salty AI - 从零训练的小型 LLM(预训练/SFT/DPO/GRPO)"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "xiongziqi" }]
+license = { text = "MIT" }
+
+dependencies = [
+    "torch>=2.1",
+    "transformers>=4.40",
+    "numpy>=1.24",
+    "pydantic>=2.5",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+    "tensorboard>=2.14",
+]
+
+[project.optional-dependencies]
+backend = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "websockets>=12.0",
+    "passlib[bcrypt]>=1.7",
+    "python-multipart>=0.0.9",
+    "aiofiles>=23.2",
+    "itsdangerous>=2.1",
+]
+dev = [
+    "pytest>=7.4",
+    "pytest-asyncio>=0.23",
+    "httpx>=0.26",
+]
+
+[project.scripts]
+salty-train = "salty.run:main"
+salty-infer = "salty.inference.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["salty*"]
+
+[tool.setuptools.package-dir]
+"" = "src"

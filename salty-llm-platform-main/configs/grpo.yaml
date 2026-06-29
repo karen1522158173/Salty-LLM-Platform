@@ -1,0 +1,50 @@
+# GRPO 阶段(对应旧 GRPO.py)
+stage: grpo
+tokenizer_path: ./minimind_tokenizer
+data_path: ./data/raw/rlaif.jsonl
+base_ckpt: ./checkpoints/dpo/dpo_step_2000.pt
+ckpt_dir: ./checkpoints/grpo
+log_dir: ./runs/grpo
+
+seed: 42
+device: cuda
+
+max_iters: 5000
+warmup: 50
+lr: 2.0e-7
+min_lr: 1.0e-8
+weight_decay: 0.01
+batch_size: 1            # 一条 prompt 采样 group_size 个回答
+grad_accum: 4
+grad_clip: 1.0
+
+group_size: 4
+beta: 0.02
+clip_eps: 0.2
+max_gen_len: 2048
+sample_temperature: 0.7
+sample_top_k: 20
+
+save_interval: 1000
+log_every: 10
+use_amp: true
+amp_dtype: bfloat16
+
+reward_weights:
+  close_tag: 1.0
+  len_ok: 0.5
+  diversity: 2.0
+  ngram_repeat: 1.5
+  logic_chain: 0.5
+  answer_match: 2.0
+  no_close_tag: 2.5
+  answer_miss: 0.5
+
+model:
+  dim: 512
+  n_layers: 6
+  n_heads: 8
+  n_kv_heads: 2
+  ffn_hidden_dim: 1536
+  max_seq_len: 2048
+  dropout: 0.0
